@@ -2,4 +2,18 @@ body{
 	margin:0;
 	padding:0;
 	background:#f1f1f1;
+	font-family: 'Open Sans', sans-serif;
+}
+*{
+    box-sizing: border-box;
+}
+:focus{
+    outline: 0 none;
+}
+header{
+	padding:50px;
+	background:#0378af;
+	color:white;
+	text-align:center;
+	height:300px;
 }
