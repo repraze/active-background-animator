@@ -12,7 +12,12 @@
 			<a href="#">link test</a>
 		</header>
 		<script>
-			$("header").activeBackgroundAnimator([ABA.getAnimation("ActiveGraph")]);
+			$("header").activeBackgroundAnimator("ActiveGraph");
+			//$("header").activeBackgroundAnimator("ActiveGraph");
+			//$("header").activeBackgroundAnimator(["ActiveGraph"]);
+			//$("header").activeBackgroundAnimator({name:"ActiveGraph"});
+			//$("header").activeBackgroundAnimator({name:"ActiveGraph",options:{nodeColor:"#ff0000"}});
+			//$("header").activeBackgroundAnimator([{name:"ActiveGraph",options:{nodeColor:"#ff0000"}}]);
 		</script>
 	</body>
 </htlm>

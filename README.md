@@ -13,13 +13,29 @@ Get the [development](https://raw.githubusercontent.com/repraze/active-backgroun
 
 ## Getting Started
 
-active-background-animator.js is easy to use, simply run:
+active-background-animator.js is easy to use and highly configurable. Here is a simple example:
 
 ``` js
-$('header').activeBackgroundAnimator();
+$('header').activeBackgroundAnimator("ActiveGraph");
 ```
 
-In the future you will be passing an array of animations and options.
+It is possible to stack animations together to make more complex animations by simply passing an array of animation:
+
+``` js
+$('header').activeBackgroundAnimator(["ActiveGraph","ActiveGraph"]);
+```
+
+To specify the options of an animation pass objects containing the name and the options instead of a string:
+
+``` js
+$('header').activeBackgroundAnimator({name:"ActiveGraph",options:{someOptions:true}});
+```
+
+Combining all the definition above will allow you to create what you need easily in many different ways:
+
+``` js
+$("header").activeBackgroundAnimator(["ActiveGraph",{name:"ActiveGraph",options:{nodeColor:"#ff0000"}}]);
+```
 
 ## License
 
