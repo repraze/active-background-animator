@@ -6,20 +6,24 @@ aba.registerAnimation("ActiveGraph",function(options){
 	}, options );
 	
 	this.init = function(canvas){
-		this.nodes = new Array();
-		this.edges = new Array();
-			
+		//this.nodes = new Array();
 		this.canvas = canvas;
 		this.width = this.canvas.width();
 		this.height = this.canvas.height();
+		
+		this.edges = new Array();
+		this.nodes = new Array();
+		this.tree = new QuadTree({x:0,y:0,w:this.width,h:this.height},1);
 		
 		//3 dots average per 100^2 pixels
 		this.nb = Math.min(this.canvas.surface*2,140);
 		this.near = 2;
 		
 		for (var i = 0; i < this.nb; i++){
-			this.nodes.push(new Node(this,new aba.Position(aba.randomIntFromInterval(0,this.width),
-														   aba.randomIntFromInterval(0,this.height))));
+			var n = new Node(this,new aba.Position(aba.randomIntFromInterval(0,this.width),
+												   aba.randomIntFromInterval(0,this.height)))
+			this.nodes.push(n);
+			this.tree.insert(n);
 		}
 	}
 	
@@ -43,6 +47,7 @@ aba.registerAnimation("ActiveGraph",function(options){
 		//node update
 		for (var i = 0; i < this.nodes.length; i++){		
 			this.nodes[i].update(t);
+			this.tree.move(this.nodes[i]);
 		}
 		
 		//edge search
@@ -50,14 +55,19 @@ aba.registerAnimation("ActiveGraph",function(options){
 		var nears = this.nodes.slice(); //copy
 		for (var i = 0; i < this.nodes.length; i++){
 			var thisPos = this.nodes[i].position;
+			var nears = this.tree.getNeighbors(thisPos);
+			
+			/*
 			nears.sort(function(a,b){
 				return a.position.sqDistanceTo(thisPos) - b.position.sqDistanceTo(thisPos)
 			});
-			
+			*/
 			//first is itself
+			
 			for(var j=1;j < this.near+1; j++){
 				this.addEdge(new Edge(this,this.nodes[i],nears[j]));
 			}
+			
 			
 			//nears = nears.slice(0, 3);
 		}
@@ -89,6 +99,10 @@ aba.registerAnimation("ActiveGraph",function(options){
 		
 		this.equals = function(n){
 			return this.position.equals(n.position);
+		}
+		
+		this.getPosition = function(){
+			return this.position;
 		}
 		
 		this.update = function(t){
